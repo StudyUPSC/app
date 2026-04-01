@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>📚 Study Portal - Lectures G</title>
-    !-- ✅ PWA Manifest -->
+    <!--- ✅ PWA Manifest -->
     <link rel="manifest" href="manifest.json">
 
     <!-- ✅ App Theme Color -->
@@ -1069,15 +1069,9 @@
         function getDeviceShortCode() { return DEVICE_ID.substring(0, Math.floor(DEVICE_ID.length * 0.5)); }
 
         // =============== JSONP ===============
-        function fetchJSONP(url) {
-            return new Promise((resolve, reject) => {
-                const cb = 'jsonp_' + Date.now();
-                const script = document.createElement('script');
-                window[cb] = function (data) { delete window[cb]; document.body.removeChild(script); resolve(data); };
-                script.src = url + "&callback=" + cb;
-                script.onerror = () => reject(new Error("JSONP failed"));
-                document.body.appendChild(script);
-            });
+        async function fetchJSONP(url) {
+            const res = await fetch(url);
+            return await res.json();
         }
 
         // =============== REGISTRATION ===============
